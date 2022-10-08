@@ -1,0 +1,68 @@
+[
+  {
+    "username": "Brian Foss",
+    "email": "bfoss@techfriends.dev",
+    "password": "password01",
+    "isadmin": false
+  },
+  {
+    "username": "Max Snyder",
+    "email": "msnider@techfriends.dev",
+    "password": "password02",
+    "isadmin": false
+  },
+  {
+    "username": "John Hamm",
+    "email": "jhamm@techfriends.dev",
+    "password": "password03",
+    "isadmin": false
+  },
+  {
+    "username": "Kent Beck",
+    "email": "kbeck@techfriends.dev",
+    "password": "password04",
+    "isadmin": false
+  },
+  {
+    "username": "Ed Hall",
+    "email": "ehall@techfriends.dev",
+    "password": "password05",
+    "isadmin": false
+  },
+  {
+    "username": "Alan Kay",
+    "email": "akay@techfriends.dev",
+    "password": "password06",
+    "isadmin": false
+  },
+  {
+    "username": "Clyde Hunt",
+    "email": "chunt@techfriends.dev",
+    "password": "password07",
+    "isadmin": false
+  },
+  {
+    "username": "David Thomas",
+    "email": "dthomas@techfriends.dev",
+    "password": "password08",
+    "isadmin": false
+  },
+  {
+    "username": "Donald Knuth",
+    "email": "dknuth@techfriends.dev",
+    "password": "password09",
+    "isadmin": false
+  },
+  {
+    "username": "Leo Smith",
+    "email": "lsmith@techfriends.dev",
+    "password": "password10",
+    "isadmin": false
+  },
+  {
+    "username": "KJ Krueger",
+    "email": "kjkrueger12@gmail.com",
+    "password": "password",
+    "isadmin": true
+  }
+]
