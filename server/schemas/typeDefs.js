@@ -28,7 +28,7 @@ const typeDefs = gql`
   type Query {
     users: [User]
     user(username: String!): User
-    order(orderid: ID!): Order
+    order(orderId: ID!): Order
     orders: [Order]
     me: User
   }
