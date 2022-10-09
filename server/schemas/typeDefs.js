@@ -12,9 +12,9 @@ const typeDefs = gql`
 
   type Order {
     _id: ID
-    width: Number
-    height: Number
-    price: Number
+    width: Int
+    height: Int
+    price: Int
     text: String
   }
 
@@ -36,7 +36,7 @@ const typeDefs = gql`
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addOrder(width: Number,height: Number,price: Number, text: String): Order
+    addOrder(width: Int,height: Int,price: Int, text: String): Order
     removeOrder(orderId: ID!): Order
   }
 `;
