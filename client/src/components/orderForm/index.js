@@ -1,113 +1,155 @@
-// import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
-// import { useMutation } from '@apollo/client';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
 
-// import { ADD_THOUGHT } from '../../utils/mutations';
-// import { QUERY_THOUGHTS, QUERY_ME } from '../../utils/queries';
+import { REMOVE_ORDER, ADD_ORDER } from '../../utils/mutations';
+import { QUERY_ORDERS, QUERY_ME } from '../../utils/queries';
 
-// import Auth from '../../utils/auth';
+import Auth from '../../utils/auth';
 
-// const ThoughtForm = () => {
-//   const [thoughtText, setThoughtText] = useState('');
+const OrderForm = () => {
+  const [width, setWidth] = useState('');
+  const [height, setHeight] = useState('');
+  const [price, setPrice] = useState(0);
+  const [text, setText] = useState('');
 
-//   const [characterCount, setCharacterCount] = useState(0);
+  const [characterCount, setCharacterCount] = useState(0);
 
-//   const [addThought, { error }] = useMutation(ADD_THOUGHT, {
-//     update(cache, { data: { addThought } }) {
-//       try {
-//         const { thoughts } = cache.readQuery({ query: QUERY_THOUGHTS });
+  const [addOrder, { error }] = useMutation(ADD_ORDER, {
+    update(cache, { data: { addOrder } }) {
+      try {
+        const { orders } = cache.readQuery({ query: QUERY_ORDERS });
 
-//         cache.writeQuery({
-//           query: QUERY_THOUGHTS,
-//           data: { thoughts: [addThought, ...thoughts] },
-//         });
-//       } catch (e) {
-//         console.error(e);
-//       }
+        cache.writeQuery({
+          query: QUERY_ORDERS,
+          data: { orders: [addOrder, ...orders] },
+        });
+      } catch (e) {
+        console.error(e);
+      }
 
-//       // update me object's cache
-//       const { me } = cache.readQuery({ query: QUERY_ME });
-//       cache.writeQuery({
-//         query: QUERY_ME,
-//         data: { me: { ...me, thoughts: [...me.thoughts, addThought] } },
-//       });
-//     },
-//   });
+      // update me object's cache
+      const { me } = cache.readQuery({ query: QUERY_ME });
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: { me: { ...me, orders: [...me.orders, addOrder] } },
+      });
+    },
+  });
 
-//   const handleFormSubmit = async (event) => {
-//     event.preventDefault();
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
 
-//     try {
-//       const { data } = await addThought({
-//         variables: {
-//           thoughtText,
-//           thoughtAuthor: Auth.getProfile().data.username,
-//         },
-//       });
+    try {
+      const { data } = await addOrder({
+        variables: {
+         width, height, price, text
+        },
+      });
+      console.log(data)
 
-//       setThoughtText('');
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   };
+      setText('');
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-//   const handleChange = (event) => {
-//     const { name, value } = event.target;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
 
-//     if (name === 'thoughtText' && value.length <= 280) {
-//       setThoughtText(value);
-//       setCharacterCount(value.length);
-//     }
-//   };
+    if (name === 'text' && value.length <= 200) {
+      setText(value);
+      setCharacterCount(value.length);
+    }
 
-//   return (
-//     <div>
-//       <h3>What's on your techy mind?</h3>
+    // Based on the input type, we set the state of either email, username, and password
+    if (name === 'width') {
+      setWidth(value);
+    } else if (name === 'height') {
+      setHeight(value);
+    } 
+  };
 
-//       {Auth.loggedIn() ? (
-//         <>
-//           <p
-//             className={`m-0 ${
-//               characterCount === 280 || error ? 'text-danger' : ''
-//             }`}
-//           >
-//             Character Count: {characterCount}/280
-//           </p>
-//           <form
-//             className="flex-row justify-center justify-space-between-md align-center"
-//             onSubmit={handleFormSubmit}
-//           >
-//             <div className="col-12 col-lg-9">
-//               <textarea
-//                 name="thoughtText"
-//                 placeholder="Here's a new thought..."
-//                 value={thoughtText}
-//                 className="form-input w-100"
-//                 style={{ lineHeight: '1.5', resize: 'vertical' }}
-//                 onChange={handleChange}
-//               ></textarea>
-//             </div>
+  return (
+    <div>
+      <h3>What's on your techy mind?</h3>
 
-//             <div className="col-12 col-lg-3">
-//               <button className="btn btn-primary btn-block py-3" type="submit">
-//                 Add Thought
-//               </button>
-//             </div>
-//             {error && (
-//               <div className="col-12 my-3 bg-danger text-white p-3">
-//                 {error.message}
-//               </div>
-//             )}
-//           </form>
-//         </>
-//       ) : (
-//         <p>
-//           You need to be logged in to share your thoughts. Please{' '}
-//           <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
-//         </p>
-//       )}
-//     </div>
-//   );
-// };
+      {Auth.loggedIn() ? (
+        <>
+          <p
+            className={`m-0 ${
+              characterCount === 280 || error ? 'text-danger' : ''
+            }`}
+          >
+            Character Count: {characterCount}/280
+          </p>
+          <form
+            className="flex-row justify-center justify-space-between-md align-center"
+            onSubmit={handleFormSubmit}
+          >
+            <div className="col-12 col-lg-9">
+              <textarea
+                name="text"
+                placeholder="Patch Text"
+                value={text}
+                className="form-input w-100"
+                style={{ lineHeight: '1.5', resize: 'vertical' }}
+                onChange={handleChange}
+              ></textarea>
+            </div>
+            <div className="col-12 col-lg-9">
+              <input
+                name="width"
+                type = "number"
+                placeholder="width in inches"
+                value={width}
+                className="form-input w-100"
+                style={{ lineHeight: '1.5', resize: 'vertical' }}
+                onChange={handleChange}
+              ></input>
+            </div>
+            <div className="col-12 col-lg-9">
+              <input
+                name="height"
+                type = "number"
+                placeholder="Height in inches"
+                value={height}
+                className="form-input w-100"
+                style={{ lineHeight: '1.5', resize: 'vertical' }}
+                onChange={handleChange}
+              ></input>
+            </div>
+            {/* <div className="col-12 col-lg-9">
+              <textarea
+                name="text"
+                placeholder="Patch Text"
+                value={thoughtText}
+                className="form-input w-100"
+                style={{ lineHeight: '1.5', resize: 'vertical' }}
+                onChange={handleChange}
+              ></textarea>
+            </div> */}
 
-// export default ThoughtForm;
+            <div className="col-12 col-lg-3">
+              <button className="btn btn-primary btn-block py-3" type="submit">
+                Place Order
+              </button>
+            </div>
+            {error && (
+              <div className="col-12 my-3 bg-danger text-white p-3">
+                {error.message}
+              </div>
+            )}
+          </form>
+        </>
+      ) : (
+        <p>
+          You need to be logged in to share your thoughts. Please{' '}
+          <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
+        </p>
+      )}
+    </div>
+  );
+};
+
+export default OrderForm;
