@@ -3,16 +3,15 @@ import { Navigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
+import OrderForm from '../components/orderForm';
 
 const Profile = () => {
   const { username: userParam } = useParams();
 
-  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
-    variables: { username: userParam },
-  });
+  const { loading, data } = useQuery(QUERY_ME);
 
   const user = data?.me || data?.user || {};
-  consol.log(user)
+  console.log(user)
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Navigate to="/me" />;
   }
@@ -50,7 +49,7 @@ const Profile = () => {
             className="col-12 col-md-10 mb-3 p-3"
             style={{ border: '1px dotted #1a1a1a' }}
           >
-            {/* <ThoughtForm /> */}
+            <OrderForm />
           </div>
         )}
       </div>
