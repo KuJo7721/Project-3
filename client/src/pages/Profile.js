@@ -1,15 +1,18 @@
 import React from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { QUERY_USER, QUERY_ME } from '../utils/queries';
+import { QUERY_USER, QUERY_ME, QUERY_ORDERS } from '../utils/queries';
 import Auth from '../utils/auth';
 import OrderForm from '../components/orderForm';
+import OrderList from '../components/orderList';
 
 const Profile = () => {
   const { username: userParam } = useParams();
 
   const { loading, data } = useQuery(QUERY_ME);
-
+  const { ordersLoading, ordersData } = useQuery(QUERY_ORDERS);
+  const orders = ordersData?.orders || [];
+  console.log(orders)
   const user = data?.me || data?.user || {};
   console.log(user)
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
@@ -37,12 +40,9 @@ const Profile = () => {
         </h2>
 
         <div className="col-12 col-md-10 mb-5">
-          {/* <ThoughtList
-            thoughts={user.thoughts}
-            title={`${user.username}'s thoughts...`}
-            showTitle={false}
-            showUsername={false}
-          /> */}
+          {user.isadmin && <OrderList orders = {orders} />}
+          {!user.isadmin && <OrderList orders = {user.orders} />}
+
         </div>
         {!userParam && (
           <div
