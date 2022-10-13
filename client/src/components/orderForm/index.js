@@ -8,39 +8,22 @@ import { QUERY_ORDERS, QUERY_ME } from '../../utils/queries';
 import Auth from '../../utils/auth';
 
 const OrderForm = () => {
-  const [width, setWidth] = useState('');
-  const [height, setHeight] = useState('');
+  const [widthInput, setWidth] = useState(0);
+  const [heightInput, setHeight] = useState(0);
   const [price, setPrice] = useState(0);
   const [text, setText] = useState('');
 
   const [characterCount, setCharacterCount] = useState(0);
 
-  const [addOrder, { error }] = useMutation(ADD_ORDER, {
-    update(cache, { data: { addOrder } }) {
-      try {
-        const { orders } = cache.readQuery({ query: QUERY_ORDERS });
-
-        cache.writeQuery({
-          query: QUERY_ORDERS,
-          data: { orders: [addOrder, ...orders] },
-        });
-      } catch (e) {
-        console.error(e);
-      }
-
-      // update me object's cache
-      const { me } = cache.readQuery({ query: QUERY_ME });
-      cache.writeQuery({
-        query: QUERY_ME,
-        data: { me: { ...me, orders: [...me.orders, addOrder] } },
-      });
-    },
-  });
+  const [addOrder, { error }] = useMutation(ADD_ORDER);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     try {
+
+      let width = parseInt(widthInput)
+      let height = parseInt(heightInput)
       const { data } = await addOrder({
         variables: {
          width, height, price, text
@@ -63,16 +46,16 @@ const OrderForm = () => {
     }
 
     // Based on the input type, we set the state of either email, username, and password
-    if (name === 'width') {
+    if (name === 'widthInput') {
       setWidth(value);
-    } else if (name === 'height') {
+    } else if (name === 'heightInput') {
       setHeight(value);
     } 
   };
 
   return (
     <div>
-      <h3>What's on your techy mind?</h3>
+      <h3>Place your order here</h3>
 
       {Auth.loggedIn() ? (
         <>
@@ -99,10 +82,10 @@ const OrderForm = () => {
             </div>
             <div className="col-12 col-lg-9">
               <input
-                name="width"
+                name="widthInput"
                 type = "number"
                 placeholder="width in inches"
-                value={width}
+                value={widthInput}
                 className="form-input w-100"
                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                 onChange={handleChange}
@@ -110,10 +93,10 @@ const OrderForm = () => {
             </div>
             <div className="col-12 col-lg-9">
               <input
-                name="height"
+                name="heightInput"
                 type = "number"
                 placeholder="Height in inches"
-                value={height}
+                value={heightInput}
                 className="form-input w-100"
                 style={{ lineHeight: '1.5', resize: 'vertical' }}
                 onChange={handleChange}

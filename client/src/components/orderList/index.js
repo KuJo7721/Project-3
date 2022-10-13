@@ -1,54 +1,36 @@
-// import React from 'react';
-// import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-// const ThoughtList = ({
-//   thoughts,
-//   title,
-//   showTitle = true,
-//   showUsername = true,
-// }) => {
-//   if (!thoughts.length) {
-//     return <h3>No Thoughts Yet</h3>;
-//   }
+const OrderList = ({
+  orders
+}) => {
+  if (!orders.length) {
+    return <h3>No Orders Yet</h3>;
+  }
 
-//   return (
-//     <div>
-//       {showTitle && <h3>{title}</h3>}
-//       {thoughts &&
-//         thoughts.map((thought) => (
-//           <div key={thought._id} className="card mb-3">
-//             <h4 className="card-header bg-primary text-light p-2 m-0">
-//               {showUsername ? (
-//                 <Link
-//                   className="text-light"
-//                   to={`/profiles/${thought.thoughtAuthor}`}
-//                 >
-//                   {thought.thoughtAuthor} <br />
-//                   <span style={{ fontSize: '1rem' }}>
-//                     had this thought on {thought.createdAt}
-//                   </span>
-//                 </Link>
-//               ) : (
-//                 <>
-//                   <span style={{ fontSize: '1rem' }}>
-//                     You had this thought on {thought.createdAt}
-//                   </span>
-//                 </>
-//               )}
-//             </h4>
-//             <div className="card-body bg-light p-2">
-//               <p>{thought.thoughtText}</p>
-//             </div>
-//             <Link
-//               className="btn btn-primary btn-block btn-squared"
-//               to={`/thoughts/${thought._id}`}
-//             >
-//               Join the discussion on this thought.
-//             </Link>
-//           </div>
-//         ))}
-//     </div>
-//   );
-// };
+  return (
+    <div>
+      <h3>Your Orders</h3>
+      {orders &&
+        orders.map((order) => (
+          <div key={order._id} className="card mb-3">
+            <h4 className="card-header bg-primary text-light p-2 m-0">
+            {`${order.width} x ${order.height}`}
+            </h4>
+            <div className="card-body bg-light p-2">
+              <p>{order.text}</p>
+              <p>Total:$ {order.price}</p>
+            </div>
+            <Link
+              className="btn btn-primary btn-block btn-squared"
+              to={`/orders/${order._id}`}
+            >
+              Review this order.
+            </Link>
+          </div>
+        ))}
+    </div>
+  );
+};
 
-// export default ThoughtList;
+export default OrderList;
