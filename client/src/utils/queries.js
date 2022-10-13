@@ -6,10 +6,13 @@ export const QUERY_USER = gql`
       _id
       username
       email
-      thoughts {
+      isadmin
+      orders {
         _id
-        thoughtText
-        createdAt
+        width
+        height
+        price
+        text
       }
     }
   }
@@ -45,11 +48,13 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      thoughts {
+      isadmin
+      orders {
         _id
-        thoughtText
-        thoughtAuthor
-        createdAt
+        width
+        height
+        price
+        text
       }
     }
   }
