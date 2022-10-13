@@ -11,6 +11,7 @@ const resolvers = {
       return User.findOne({ username }).populate('orders');
     },
     orders: async (parent, args) => {
+      console.log("orders query")
       return Order.find();
     },
     order: async (parent, { orderId }) => {
