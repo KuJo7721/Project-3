@@ -1,14 +1,8 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-
-// import ThoughtList from '../components/ThoughtList';
-// import ThoughtForm from '../components/ThoughtForm';
-
-// import { QUERY_THOUGHTS } from '../utils/queries';
+import "./home.css"
 
 const Home = () => {
-  // const { loading, data } = useQuery(QUERY_THOUGHTS);
-  // const thoughts = data?.thoughts || [];
 
   return (
     <main>
@@ -27,7 +21,12 @@ const Home = () => {
             32in x 32in
           </p>
         </div>
-        <div className="col-12 col-md-8 mb-3"></div>
+        <div className="col-12 col-md-8 mb-3">
+          <img className="home-image" src='https://res.cloudinary.com/dmeqych6o/image/upload/v1665344898/Project%203/per_cap_patch_qf66fi.jpg'></img>
+          <img className="home-image" src='https://res.cloudinary.com/dmeqych6o/image/upload/v1665350020/Project%203/per_coasters_gaea11.jpg'></img>
+          <img className="home-image"  src='https://res.cloudinary.com/dmeqych6o/image/upload/v1665344915/Project%203/per_dog_collar_ne1gme.jpg'></img>
+          <img className="home-image" src='https://res.cloudinary.com/dmeqych6o/image/upload/v1665344910/Project%203/per_keychain_fatme6.jpg'></img>
+        </div>
       </div>
     </main>
   );
