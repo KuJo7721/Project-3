@@ -40,8 +40,8 @@ const Profile = () => {
         </h2>
 
         <div className="col-12 col-md-10 mb-5">
-          {user.isadmin && <OrderList orders = {orders} />}
-          {!user.isadmin && <OrderList orders = {user.orders} />}
+          {user && <OrderList orders = {user.orders} />}
+          {/* {!user.isadmin && <OrderList orders = {user.orders} />} */}
 
         </div>
         {!userParam && (
